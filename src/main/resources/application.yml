@@ -1,0 +1,71 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource  #这是druid自己定义的
+    url: jdbc:mysql://localhost:3306/db1?useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true  #这是你的jdbc_url
+    username: root  #数据库连接用户名
+    password: 2017211678   #数据库连接密码
+    initialSize: 10  #初始化的时候有几条连接
+    minIdle: 10  #连接池中最少保持几条连接
+    maxActive: 100  #连接池中最大保持几条连接
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 200   #PreparedStatement缓存大小
+    filters: stat,wall          #stat:web监控   wall：sql防火墙
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    useGlobalDataSourceStat: true
+    loginUsername: root
+    loginPassword: 2017211678
+    test-while-idle: true
+    driverClassName: com.mysql.cj.jdbc.Driver    #jdbc驱动名，这个一定要有
+  session:
+    store-type: redis
+    timeout: 600s
+    redis:
+      flush-mode: on_save
+      namespace: spring:session
+  thymeleaf:
+    cache: false  #模板是否使用缓存，本地开发的时候建议设置为false，部署后设置为true
+    prefix: classpath:/templates/    #模板的路径前缀
+    suffix: .html  #模板后缀名
+    encoding: UTF-8  #模板的编码
+    mode: HTML5  #模板是html5
+    check-template: true
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  resources:  #静态资源路径设置，springboot将会在设置的几个值中以从前到后顺序查找静态资源
+    static-locations: classpath:/META-INF/resources/,classpath:/resources,classpath:/static/,classpath:/public/
+server:  #内嵌tomcat的配置
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+  servlet:
+    context-path: /
+redis:
+  host: localhost
+  prot: 6379
+  database: 0
+  timeout: -1
+  maxIdle: 8
+  minIdle: 0
+  maxActive: 8
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+audience:
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+  base64Secret: 098f6bcd4621d373cade4e832627b4f6
+  name: restapiuser
+  expiresSecond: 172800
